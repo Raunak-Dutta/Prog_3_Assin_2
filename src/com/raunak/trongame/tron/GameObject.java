@@ -2,10 +2,7 @@ package com.raunak.trongame.tron;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
-/**
- * @author Evan Tichenor (evan.tichenor@gmail.com)
- * @version 1.0, 6/15/2017
- */
+
 public abstract class GameObject {
 
     protected Point2D position;

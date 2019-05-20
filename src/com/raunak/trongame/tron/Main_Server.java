@@ -12,10 +12,7 @@ import java.util.ArrayList;
 
 import static com.raunak.trongame.tron.TronGame.*;
 
-/**
- * @author Evan Tichenor (evan.tichenor@gmail.com)
- * @version 1.0, 10/16/2017
- */
+
 public class Main_Server extends Application {
 
     private com.raunak.trongame.tron.TronGame game;

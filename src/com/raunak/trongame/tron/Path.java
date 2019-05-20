@@ -6,10 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 import static com.raunak.trongame.tron.TronGame.BLOCK_SIZE;
 import static com.raunak.trongame.tron.TronGame.PATH_SPACING;
 
-/**
- * @author Evan Tichenor (evan.tichenor@gmail.com)
- * @version 1.0, 10/16/2017
- */
+
 public class Path extends GameObject {
 
     /**

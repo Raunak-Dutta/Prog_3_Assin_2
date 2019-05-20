@@ -9,10 +9,7 @@ import java.util.List;
 
 import static com.raunak.trongame.tron.TronGame.*;
 
-/**
- * @author Evan Tichenor (evan.tichenor@gmail.com)
- * @version 1.0, 6/6/2017
- */
+
 public class Bike extends GameObject {
 
     private Color bikeColor;

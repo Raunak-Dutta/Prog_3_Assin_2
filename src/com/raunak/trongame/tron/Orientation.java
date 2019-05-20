@@ -2,10 +2,7 @@ package com.raunak.trongame.tron;
 
 import javafx.geometry.Point2D;
 
-/**
- * @author Evan Tichenor (evan.tichenor@gmail.com)
- * @version 1.0, 6/6/2017
- */
+
 public enum Orientation {
     UP,
     DOWN,
