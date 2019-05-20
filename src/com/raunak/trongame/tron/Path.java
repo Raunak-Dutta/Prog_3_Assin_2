@@ -85,7 +85,7 @@ public class Path extends GameObject {
 
     @Override
     public String toString() {
-        return "com.evan.tichenor.tron.Path{" +
+        return "com.raunak.trongame.tron.Path{" +
                 "position=" + position +
                 ", directionIn=" + directionIn +
                 ", directionOut=" + directionOut +

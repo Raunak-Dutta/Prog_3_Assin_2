@@ -26,7 +26,7 @@ public class Main_Server extends Application {
 
         root.getChildren().add(game);
 
-        stage.setTitle("TRON Light Bikes");
+        stage.setTitle("TRON Light Game 0.01 alpha");
         stage.setScene(scene);
 
         ArrayList<KeyCode> keysPressed = new ArrayList<>();
@@ -45,7 +45,7 @@ public class Main_Server extends Application {
         Value<Long> lastNanoTime = new Value<>(System.nanoTime()),
                 timer = new Value<>(0L);
 
-        final double ns = 1e+9 / 15; // ns / frame, 15 fps
+        final double ns = 1e+9 / 10; // ns / frame, 15 fps adjust FPS here
 
         Value<Double> delta = new Value<>(0d);
 

@@ -9,8 +9,11 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class TronGame extends Canvas {
 
@@ -103,19 +106,37 @@ public class TronGame extends Canvas {
 
     public void gameOver(String playerWin) {
         paused = true;
+        System.out.println(playerWin + " win!");
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(playerWin + " wins!");
-        alert.setHeaderText(playerWin + " wins!");
-        alert.setContentText("Want to play again?");
+//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//        alert.setTitle(playerWin + " wins!");
+//        alert.setHeaderText(playerWin + " wins!");
+//        alert.setContentText("Want to play again?");
+//
+//        // this fixes an error. cause why not (no it don't you idiot)
+//        alert.show();
+//        alert.setOnHidden(x -> {
+//            if(alert.getResult() != null && alert.getResult().equals(ButtonType.OK))
+//                startGame();
+//            else Platform.exit();
+//        });
 
-        // this fixes an error. cause why not
-        alert.show();
-        alert.setOnHidden(x -> {
-            if(alert.getResult() != null && alert.getResult().equals(ButtonType.OK))
-                startGame();
-            else Platform.exit();
-        });
+        new Thread(new Runnable() {  //this took me so fucking long to figure out.
+            public void run() {
+
+                JDialog.setDefaultLookAndFeelDecorated(true);
+                int response = JOptionPane.showConfirmDialog(null, playerWin + " wins! Restart?", playerWin + " wins!",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+                if (response == JOptionPane.YES_OPTION) {
+                    startGame();
+                    JOptionPane.getRootFrame().dispose();
+                    paused = false;
+                } else {
+                    Platform.exit();
+                }
+            }
+        }).start();
     }
 
     public void startGame() {
@@ -123,8 +144,9 @@ public class TronGame extends Canvas {
 
         int offsetFromWall = 2;
 
-        bikes.add(new Bike(Color.BLUE, new Point2D(offsetFromWall, TILES_Y / 2)));
-        bikes.add(new Bike(Color.RED, new Point2D(TILES_X - offsetFromWall, TILES_Y / 2)));
+        bikes.add(new Bike(Color.BLUE, new Point2D(offsetFromWall, TILES_Y / 2)));  //change bike colors and behiviour
+        bikes.add(new Bike(Color.RED, new Point2D(TILES_X - offsetFromWall, TILES_Y / 2))); //add bikes
+        //bikes.add(new Bike(Color.RED, new Point2D(((TILES_X - offsetFromWall) /2), TILES_Y / 2))); //add bikes
 
         paused = false;
     }
