@@ -107,36 +107,36 @@ public class TronGame extends Canvas {
     public void gameOver(String playerWin) {
         paused = true;
         System.out.println(playerWin + " win!");
-
-//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-//        alert.setTitle(playerWin + " wins!");
-//        alert.setHeaderText(playerWin + " wins!");
-//        alert.setContentText("Want to play again?");
-//
-//        // this fixes an error. cause why not (no it don't you idiot)
-//        alert.show();
-//        alert.setOnHidden(x -> {
-//            if(alert.getResult() != null && alert.getResult().equals(ButtonType.OK))
-//                startGame();
-//            else Platform.exit();
-//        });
-
-        new Thread(new Runnable() {  //this took me so fucking long to figure out.
+        final Runnable r = new Runnable() {
+            @Override
             public void run() {
+                {  //this took me so fucking long to figure out.
 
-                JDialog.setDefaultLookAndFeelDecorated(true);
-                int response = JOptionPane.showConfirmDialog(null, playerWin + " wins! Restart?", playerWin + " wins!",
-                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    JDialog.setDefaultLookAndFeelDecorated(true);
+                    int response = JOptionPane.showConfirmDialog(null, playerWin + " wins! Restart?", playerWin + " wins!",
+                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-                if (response == JOptionPane.YES_OPTION) {
-                    startGame();
-                    JOptionPane.getRootFrame().dispose();
-                    paused = false;
-                } else {
-                    Platform.exit();
+                    if (response == JOptionPane.YES_OPTION) {
+                        startGame();
+                        JOptionPane.getRootFrame().dispose();
+                        paused = false;
+                    } else {
+                        Platform.exit();
+                        if(!Thread.currentThread().isInterrupted()) {
+                            Thread.currentThread().interrupt();
+                            System.exit(0);
+                        }
+                        else{
+                            System.out.println("Thread is not intereputed");
+                        }
+
+                    }
                 }
+
             }
-        }).start();
+        };
+        Thread message = new Thread(r);
+        message.start();
     }
 
     public void startGame() {
