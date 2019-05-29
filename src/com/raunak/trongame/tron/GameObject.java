@@ -5,9 +5,9 @@ import javafx.scene.canvas.GraphicsContext;
 
 public abstract class GameObject {
 
-    protected Point2D position;
+    Point2D position;
 
-    public GameObject() {
+    GameObject() {
         position = new Point2D(0, 0);
     }
 

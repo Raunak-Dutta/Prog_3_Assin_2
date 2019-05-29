@@ -49,6 +49,7 @@ public class Main_Server extends Application {
 
         Value<Double> delta = new Value<>(0d);
 
+
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
                 if (game.isPaused()) {

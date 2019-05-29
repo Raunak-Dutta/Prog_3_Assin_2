@@ -15,7 +15,7 @@ public class Path extends GameObject {
      */
     private Orientation directionIn, directionOut;
 
-    public Path(Point2D position, Orientation directionIn, Orientation directionOut) {
+    Path(Point2D position, Orientation directionIn, Orientation directionOut) {
         this.position = position;
         this.directionIn = directionIn;
         this.directionOut = directionOut;

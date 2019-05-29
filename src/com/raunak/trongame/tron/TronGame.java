@@ -11,22 +11,25 @@ import javafx.scene.paint.Color;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class TronGame extends Canvas {
 
-    public static final int BLOCK_SIZE = 25;
-    public static final int TILES_X = 30;
-    public static final int TILES_Y = 30;
-    public static final int BIKE_SPACING = BLOCK_SIZE / 5;
-    public static final int PATH_SPACING = BLOCK_SIZE / 3;
+    static final int BLOCK_SIZE = 25;
+    static final int TILES_X = 30;
+    static final int TILES_Y = 30;
+    static final int BIKE_SPACING = BLOCK_SIZE / 5;
+    static final int PATH_SPACING = BLOCK_SIZE / 3;
 
-    public static final int WIDTH = BLOCK_SIZE * TILES_X;
-    public static final int HEIGHT = BLOCK_SIZE * TILES_Y;
+    static final int WIDTH = BLOCK_SIZE * TILES_X;
+    static final int HEIGHT = BLOCK_SIZE * TILES_Y;
 
-    public boolean paused;
+    private boolean paused;
 
     private ArrayList<KeyCode> keysPressed;
 
@@ -36,17 +39,17 @@ public class TronGame extends Canvas {
         this(WIDTH, HEIGHT);
     }
 
-    public TronGame(double width, double height) {
+    TronGame(double width, double height) {
         super(width, height);
 
         startGame();
     }
 
-    public boolean isPaused() {
+    boolean isPaused() {
         return paused;
     }
 
-    public void update() {
+    void update() {
         if(!paused) {
             // game logic, movement
             keys();
@@ -78,7 +81,7 @@ public class TronGame extends Canvas {
         }
     }
 
-    public void keys() {
+    private void keys() {
         Bike bike1 = bikes.get(0);
         if(keysPressed.contains(KeyCode.W))
             bike1.setOrientation(Orientation.UP);
@@ -100,20 +103,24 @@ public class TronGame extends Canvas {
             bike2.setOrientation(Orientation.RIGHT);
     }
 
-    public void setKeysPressed(ArrayList<KeyCode> keysPressed) {
+    void setKeysPressed(ArrayList<KeyCode> keysPressed) {
         this.keysPressed = keysPressed;
     }
 
-    public void gameOver(String playerWin) {
+    private void gameOver(String playerWin) {
         paused = true;
-        System.out.println(playerWin + " win!");
+        System.out.println(playerWin + " win!  ");
+        List<Path> deduped0 = bikes.get(0).getPaths().stream().distinct().collect(Collectors.toList());
+        Set<Path> set0 = new HashSet<>(deduped0);
+        System.out.println("Blue:  "+set0.size());
         final Runnable r = new Runnable() {
             @Override
             public void run() {
                 {  //this took me so fucking long to figure out.
 
                     JDialog.setDefaultLookAndFeelDecorated(true);
-                    int response = JOptionPane.showConfirmDialog(null, playerWin + " wins! Restart?", playerWin + " wins!",
+                    int response = JOptionPane.showConfirmDialog(null, (playerWin + " wins! Restart? \n"
+                                    +playerWin+" : "+set0.size()+" Points"), playerWin + " wins!",
                             JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
                     if (response == JOptionPane.YES_OPTION) {
@@ -139,14 +146,14 @@ public class TronGame extends Canvas {
         message.start();
     }
 
-    public void startGame() {
+    private void startGame() {
         bikes = new ArrayList<>();
 
         int offsetFromWall = 2;
 
         bikes.add(new Bike(Color.BLUE, new Point2D(offsetFromWall, TILES_Y / 2)));  //change bike colors and behiviour
         bikes.add(new Bike(Color.RED, new Point2D(TILES_X - offsetFromWall, TILES_Y / 2))); //add bikes
-        //bikes.add(new Bike(Color.RED, new Point2D(((TILES_X - offsetFromWall) /2), TILES_Y / 2))); //add bikes
+        bikes.add(new Bike(Color.PINK, new Point2D(((TILES_X - offsetFromWall) /2), TILES_Y / 2))); //add bikes
 
         paused = false;
     }

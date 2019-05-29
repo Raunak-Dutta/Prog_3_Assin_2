@@ -18,7 +18,7 @@ public class Bike extends GameObject {
     private Orientation currentOrientation;
     private List<Path> paths;
 
-    public Bike(Color bikeColor, Point2D position) {
+    Bike(Color bikeColor, Point2D position) {
         this.bikeColor = bikeColor;
 
         this.position = position;
@@ -49,7 +49,7 @@ public class Bike extends GameObject {
         return currentOrientation;
     }
 
-    public boolean setOrientation(Orientation orientation) {
+    boolean setOrientation(Orientation orientation) {
         if(currentOrientation.isOpposite(orientation))
             return false;
 
@@ -62,7 +62,7 @@ public class Bike extends GameObject {
         return currentOrientation.getRotation();
     }
 
-    public synchronized boolean hasCrashed(List<Bike> bikes) {
+    synchronized boolean hasCrashed(List<Bike> bikes) {
         for(Bike other : bikes) // bikes also include this bike
             for(Path p : other.paths)
                 if(position.equals(p.getPosition()))
@@ -70,12 +70,12 @@ public class Bike extends GameObject {
         return false;
     }
 
-    public synchronized boolean hasHitWall() {
+    synchronized boolean hasHitWall() {
         return position.getX() >= TILES_X || position.getX() < 0 ||
                 position.getY() >= TILES_Y || position.getY() < 0;
     }
 
-    public void update() {
+    void update() {
         paths.add(new Path(position, lastOrientation.getOpposite(), currentOrientation));
         lastOrientation = currentOrientation;
         position = position.add(currentOrientation.getRotation());
@@ -94,7 +94,7 @@ public class Bike extends GameObject {
     public synchronized void draw(GraphicsContext g) {
         // draw bike
         g.setFill(bikeColor);
-        if(currentOrientation.getRotation().getX() == 0) // up and down ☺
+        if(currentOrientation.getRotation().getX() == 0) // up and down
             g.fillRect(
                     position.getX() * BLOCK_SIZE + BIKE_SPACING,
                     position.getY() * BLOCK_SIZE,
