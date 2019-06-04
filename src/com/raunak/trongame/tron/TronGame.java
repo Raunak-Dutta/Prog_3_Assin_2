@@ -60,17 +60,21 @@ public class TronGame extends Canvas {
             // hit wall
             Bike bike1 = bikes.get(0);
             Bike bike2 = bikes.get(1);
+            Bike bike3 = bikes.get(2);
 
             if(bike1.hasHitWall())
                 gameOver("Red Bike");
             else if(bike2.hasHitWall())
                 gameOver("Blue Bike");
 
+
             // hit path
-            if(bike1.hasCrashed(bikes))
+            if(bike1.hasCrashed(bikes) && !bike2.hasCrashed(bikes))
                 gameOver("Red Bike");
-            else if(bike2.hasCrashed(bikes))
+            else if(bike2.hasCrashed(bikes) && !bike1.hasCrashed(bikes))
                 gameOver("Blue Bike");
+            else if(bike2.hasCrashed(bikes) && bike1.hasCrashed(bikes))
+                gameOver("No one");
 
             // render
             GraphicsContext g = getGraphicsContext2D();
@@ -101,6 +105,16 @@ public class TronGame extends Canvas {
             bike2.setOrientation(Orientation.DOWN);
         else if(keysPressed.contains(KeyCode.RIGHT))
             bike2.setOrientation(Orientation.RIGHT);
+
+        Bike bike3 = bikes.get(2);
+        if(keysPressed.contains(KeyCode.I))
+            bike3.setOrientation(Orientation.UP);
+        else if(keysPressed.contains(KeyCode.J))
+            bike3.setOrientation(Orientation.LEFT);
+        else if(keysPressed.contains(KeyCode.K))
+            bike3.setOrientation(Orientation.DOWN);
+        else if(keysPressed.contains(KeyCode.L))
+            bike3.setOrientation(Orientation.RIGHT);
     }
 
     void setKeysPressed(ArrayList<KeyCode> keysPressed) {
